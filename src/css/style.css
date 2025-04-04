@@ -1,0 +1,79 @@
+.box .title {
+    text-align: center;
+}
+ul {
+    list-style-position: inside;
+}
+ul li {
+    list-style-type: none;
+    text-align: center;
+}
+.red {
+    color: #ffa9a9;
+}
+.blue {
+    color: #98d5ff;
+}
+.green {
+    color: #97ff97;
+}
+.purple {
+    color: #cb94ff;
+}
+.orange {
+    color: #ffd071;
+}
+.yellow {
+    color: #ffff81;
+}
+.submitted {
+    background-color: #ffff81;
+}
+.received {
+    background-color: #ffd071;
+}
+.rejected {
+    background-color: #ffa9a9;
+}
+.interview {
+    background-color: #cb94ff;
+}
+.offer {
+    background-color: #98d5ff;
+}
+.accepted {
+    background-color: #97ff97;
+}
+.box {
+    width: 15rem;
+}
+.block {
+    width: 90%;
+}
+.level {
+    width: 90%;
+}
+.addForm {
+    width: 40%;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+.tag {
+    display: none;
+}
+tbody tr:hover {
+    filter: brightness(70%);
+}
+.delete {
+    margin-top: .2rem;
+    position: absolute;
+    right: 1rem;
+    opacity: 100%;
+}
+.last-column {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
