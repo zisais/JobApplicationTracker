@@ -16,6 +16,11 @@ $(document).on('click', '.delete', function() {
     $.post('delete.php', {id: rowId}, () => {});
 });
 
+$(document).on('click', '.edit', function() {
+    const rowId = $(this).closest('tr').attr('id');
+    window.location.href = `editAppForm.php?id=${rowId}`;
+});
+
 const generateRows = (apps) => {
     let rows = [];
     apps.forEach((app) => {
@@ -27,15 +32,12 @@ const generateRows = (apps) => {
 
 const generateRow = (app) => {
     return `<tr class="${app['status']}" id="${app['id']}">
-                <td class="has-text-centered has-text-black">${app['company']}</td>
-                <td class="has-text-centered has-text-black">${app['title']}</td>
-                <td class="has-text-centered has-text-black last-column">
+                <td class="has-text-centered has-text-black company">${app['company']}</td>
+                <td class="has-text-centered has-text-black appTitle">${app['title']}</td>
+                <td class="has-text-centered has-text-black last-column date">
                     ${app['appDate']}
+                    <button class="edit"></button>
                     <button class="delete"></button>
                 </td>
     </tr>`;
-}
-
-const deleteRow = (id) => {
-
 }

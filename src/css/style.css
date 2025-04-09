@@ -69,11 +69,65 @@ tbody tr:hover {
 .delete {
     margin-top: .2rem;
     position: absolute;
-    right: 1rem;
-    opacity: 100%;
+    right: .5rem;
 }
 .last-column {
     position: relative;
     display: flex;
     justify-content: center;
+}
+
+/* styling for hamburger edit button */
+.edit {
+    --bulma-delete-dimensions: 1.25rem;
+    --bulma-delete-background-l: 0%;
+    --bulma-delete-background-alpha: 0.5;
+    --bulma-delete-color: var(--bulma-white);
+    appearance: none;
+    background-color: hsla(var(--bulma-scheme-h), var(--bulma-scheme-s), var(--bulma-delete-background-l), var(--bulma-delete-background-alpha));
+    border: none;
+    border-radius: var(--bulma-radius-rounded);
+    cursor: pointer;
+    pointer-events: auto;
+    display: inline-flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+    font-size: 1em;
+    height: var(--bulma-delete-dimensions);
+    max-height: var(--bulma-delete-dimensions);
+    max-width: var(--bulma-delete-dimensions);
+    min-height: var(--bulma-delete-dimensions);
+    min-width: var(--bulma-delete-dimensions);
+    outline: none;
+    position: absolute;
+    vertical-align: top;
+    width: var(--bulma-delete-dimensions);
+    margin-top: .2rem;
+    right: 2rem;
+}
+.edit::before, .edit::after {
+    background-color: var(--bulma-delete-color);
+    content: "";
+    display: block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    transform-origin: center center;
+}
+.edit::before {
+    height: 2px; /* Thickness of the horizontal line */
+    width: 60%; /* Width of the top bar */
+    top: 40%; /* Adjust position for the top bar */
+}
+.edit::after {
+    height: 2px; /* Thickness of the horizontal line */
+    width: 60%; /* Width of the bottom bar */
+    top: 60%; /* Adjust position for the bottom bar */
+}
+.edit:hover, .edit:focus {
+    --bulma-delete-background-alpha: 0.4;
+}
+.edit:active {
+    --bulma-delete-background-alpha: 0.5;
 }

@@ -30,11 +30,7 @@ function checkForDb() {
 function getAllApps() {
     global $mysqli;
     global $dbTable;
-    $query = "
-        SELECT *
-        FROM {$dbTable}
-        ORDER BY appDate;
-    ";
+    $query = "SELECT * FROM {$dbTable} ORDER BY appDate;";
 
     $result = $mysqli->query($query);
     return $result->fetch_all(MYSQLI_ASSOC);
@@ -70,7 +66,6 @@ function addApp($company,$title,$date,$status) {
     $company = $mysqli->real_escape_string($company);
     $title = $mysqli->real_escape_string($title);
 
-
     $query = "
         INSERT INTO {$dbTable} (company,title,appDate,status)
         VALUES ('{$company}','{$title}','{$date}','{$status}');
@@ -87,4 +82,32 @@ function deleteApp($id) {
 
     $query = "DELETE FROM {$dbTable} WHERE id={$id};";
     $mysqli->query($query);
+}
+
+function editApp($id, $company, $title, $date, $status) {
+    global $dbName;
+    global $dbTable;
+    global $mysqli;
+    $mysqli->select_db($dbName);
+
+    $company = $mysqli->real_escape_string($company);
+    $title = $mysqli->real_escape_string($title);
+
+    $query = "
+        UPDATE {$dbTable}
+        SET company = '{$company}', title = '{$title}', appDate = '{$date}', status = '{$status}'
+        WHERE id = {$id};
+    ";
+    $mysqli->query($query);
+}
+
+function getApp($id) {
+    global $dbName;
+    global $dbTable;
+    global $mysqli;
+    $mysqli->select_db($dbName);
+
+    $query = "SELECT * FROM {$dbTable} WHERE id={$id};";
+    $result = $mysqli->query($query);
+    return $result->fetch_all(MYSQLI_ASSOC)[0];
 }
