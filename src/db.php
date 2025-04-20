@@ -63,15 +63,15 @@ function addApp($company,$title,$date,$status) {
     global $mysqli;
     $mysqli->select_db($dbName);
 
-    $company = $mysqli->real_escape_string($company);
-    $title = $mysqli->real_escape_string($title);
-
     $query = "
         INSERT INTO {$dbTable} (company,title,appDate,status)
-        VALUES ('{$company}','{$title}','{$date}','{$status}');
+        VALUES (?,?,?,?);
     ";
 
-    $mysqli->query($query);
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("ssss", $company,$title,$date,$status);
+    $stmt->execute();
+    $stmt->close();
 }
 
 function deleteApp($id) {
@@ -80,8 +80,11 @@ function deleteApp($id) {
     global $mysqli;
     $mysqli->select_db($dbName);
 
-    $query = "DELETE FROM {$dbTable} WHERE id={$id};";
-    $mysqli->query($query);
+    $query = "DELETE FROM {$dbTable} WHERE id = ?;";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $stmt->close();
 }
 
 function editApp($id, $company, $title, $date, $status) {
@@ -90,15 +93,16 @@ function editApp($id, $company, $title, $date, $status) {
     global $mysqli;
     $mysqli->select_db($dbName);
 
-    $company = $mysqli->real_escape_string($company);
-    $title = $mysqli->real_escape_string($title);
-
     $query = "
         UPDATE {$dbTable}
-        SET company = '{$company}', title = '{$title}', appDate = '{$date}', status = '{$status}'
-        WHERE id = {$id};
+        SET company = ?, title = ?, appDate = ?, status = ?
+        WHERE id = ?;
     ";
-    $mysqli->query($query);
+
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param("ssssi", $company, $title, $date, $status, $id);
+    $stmt->execute();
+    $stmt->close();
 }
 
 function getApp($id) {
@@ -107,7 +111,12 @@ function getApp($id) {
     global $mysqli;
     $mysqli->select_db($dbName);
 
-    $query = "SELECT * FROM {$dbTable} WHERE id={$id};";
-    $result = $mysqli->query($query);
+    $query = "SELECT * FROM {$dbTable} WHERE id = ?;";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();
+
     return $result->fetch_all(MYSQLI_ASSOC)[0];
 }
